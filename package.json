@@ -1,7 +1,7 @@
 {
-  "name": "gascode-image-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for AI image generation via OpenRouter",
+  "name": "gascode-media-mcp",
+  "version": "1.1.0",
+  "description": "MCP server for AI image, video & TTS generation via OpenRouter",
   "type": "module",
   "main": "src/index.js",
   "bin": {
