@@ -8,10 +8,24 @@ import {
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { fileURLToPath } from "node:url";
+
+function loadEnv() {
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+  const envPath = path.resolve(dir, "../.env");
+  if (!fs.existsSync(envPath)) return;
+  for (const line of fs.readFileSync(envPath, "utf8").split("\n")) {
+    const match = line.match(/^([A-Z_]+)=(.*)$/);
+    if (match && !process.env[match[1]]) {
+      process.env[match[1]] = match[2].replace(/^["']|["']$/g, "");
+    }
+  }
+}
+loadEnv();
 
 const API_KEY = process.env.OPENROUTER_API_KEY;
 const BASE_URL = "https://openrouter.ai/api/v1";
-const DEFAULT_MODEL = "google/gemini-2.5-flash-preview-05-20";
+const DEFAULT_MODEL = "google/gemini-2.5-flash-image";
 
 const server = new Server(
   { name: "gascode-image", version: "1.0.0" },
